@@ -29,24 +29,22 @@ coef(leaps.bwd,7)
 
 library(genridge)
 
-# Calculate Ridge estimator for a range of lambda: 0 -> 10
+# Calculate Ridge estimator range- lambda: 0 -> 10
 
 lambda<-seq(0,10,length.out=100)
 L <- ridge(ret.a.c$returned~.,data=ret.a.c,lambda=lambda)
 
-# Visualize how the coefficients shrink with increasing lambda
+# Coefficients shrinkage
 
 traceplot(L,X=c("lambda"))
 M<-as.matrix(L$GCV)
 abline(v=L$lambda[which.min(M)])
-
-# Final result
 traceplot(L,X=c("lambda"))
 abline(v=L$kGCV,col="black",lwd=3)
 
 #PCR
 library(pls)
-set.seed(1) # To have the same result
+set.seed(1)
 pcr.fit<-pcr(ret.a.c$returned~.,data=ret.a.c ,scale =TRUE,validation ="LOO") 
 summary(pcr.fit)
 
